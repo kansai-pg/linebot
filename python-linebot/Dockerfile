@@ -10,11 +10,11 @@ COPY ./Wallet_DB202110141010.zip /opt/oracle/network/admin/Wallet_DB202110141010
 
 RUN sh -c 'cd /opt/oracle/network/admin/ && unzip -B Wallet_*.zip && rm -f instantclient-*.zip'
 
-COPY ./linebot/requirements.txt requirements.txt 
+COPY ./python-linebot/requirements.txt requirements.txt 
 
 RUN pip install -r requirements.txt
 
-COPY ./linebot linebot
+COPY ./python-linebot linebot
 
 WORKDIR /linebot
 

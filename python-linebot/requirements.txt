@@ -1,0 +1,4 @@
+cx_Oracle
+line-bot-sdk
+flask
+mod_wsgi-standalone

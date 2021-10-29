@@ -1,0 +1,77 @@
+{
+    "type": "bubble",
+    "direction": "ltr",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "text",
+          "text": "掃除当番",
+          "weight": "regular",
+          "size": "lg",
+          "align": "center",
+          "contents": []
+        },
+        {
+          "type": "box",
+          "layout": "vertical",
+          "margin": "lg",
+          "contents": [
+            {
+              "type": "text",
+              "text": "クリックもしくは",
+              "size": "lg",
+              "align": "center",
+              "gravity": "center",
+              "wrap": true,
+              "contents": []
+            },
+            {
+              "type": "text",
+              "text": "タップしてください",
+              "size": "lg",
+              "align": "center",
+              "gravity": "top",
+              "margin": "md",
+              "contents": []
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "box",
+      "layout": "vertical",
+      "flex": 0,
+      "contents": [
+        {
+          "type": "button",
+          "action": {
+            "type": "message",
+            "label": "自分が当番になる",
+            "text": "me"
+          },
+          "style": "link"
+        },
+        {
+          "type": "button",
+          "action": {
+            "type": "message",
+            "label": "当番は決めない",
+            "text": "not"
+          },
+          "height": "sm",
+          "style": "link"
+        }
+      ]
+    },
+    "styles": {
+      "body": {
+        "separator": false
+      },
+      "footer": {
+        "separator": false
+      }
+    }
+  }

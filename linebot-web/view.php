@@ -2,7 +2,7 @@
 session_start();
 ini_set('display_errors', 1);
 include('login_class.php');
-include('db?class.php');
+include('db_class.php');
 
 if (empty($_SESSION['state']) or empty($_SESSION['state'])){
     header("Location: index.html");

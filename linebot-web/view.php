@@ -22,14 +22,12 @@ $user_id = $_SESSION['user_id'];
 
 #require('./dbconnect.php');
 
-$stmt = new PDO("oci:dbname=db202110141010_high;charset=utf8", 'admin', getenv('pass'));
+$dbh = new db();
 
 #https://gray-code.com/php/getting-data-by-using-pdo/
-$stmt->prepare("SELECT id, room_name, time, datetime, frequency FROM mainid WHERE user_id = :user_id");
+$stmt = $dbh->prepare("SELECT id, room_name, time, datetime, frequency FROM mainid WHERE user_id = :user_id");
 
-echo $user_id;
-
-$stmt->bindValue(':user_id',$user_id,PDO::PARAM_STR);
+$stmt->bindValue(":user_id",$user_id,PDO::PARAM_STR);
 
 $stmt->execute();
 

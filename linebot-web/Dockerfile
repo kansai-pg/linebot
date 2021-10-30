@@ -1,4 +1,4 @@
-FROM php:8.0.11-apache-buster
+FROM php:8.0-fpm
 
 ENV ORACLE_HOME=/opt/oracle
 
@@ -20,5 +20,8 @@ RUN sh -c 'cd /opt/oracle/network/admin/ && unzip -B Wallet_*.zip && rm -f insta
 
 RUN docker-php-ext-configure oci8 --with-oci8=instantclient,/opt/oracle/lib &&  docker-php-ext-install oci8 &&  docker-php-ext-configure pdo_oci --with-pdo-oci=instantclient,/opt/oracle/lib &&  docker-php-ext-install pdo_oci
 
+COPY ./zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
+
 COPY ./linebot-web /var/www/html
 
+RUN groupadd -g 101 nginx && useradd -u 101 -g 101 nginx

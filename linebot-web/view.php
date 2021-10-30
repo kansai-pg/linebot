@@ -25,7 +25,7 @@ $user_id = $_SESSION['user_id'];
 $stmt = new db();
 
 #https://gray-code.com/php/getting-data-by-using-pdo/
-$stmt = $dbh->prepare("SELECT id, room_name, time, datetime, frequency FROM mainid WHERE user_id = :user_id");
+$stmt->prepare("SELECT id, room_name, time, datetime, frequency FROM mainid WHERE user_id = :user_id");
 
 $stmt->bindValue(":user_id",$user_id,PDO::PARAM_STR);
 

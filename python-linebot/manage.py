@@ -431,4 +431,4 @@ def handle_join(event):
         TextSendMessage(text=event.source.type + 'への登録ありがとうございます。\n掃除通知をお知らせします。\nbotの利用規約はこちらをご参照ください\n https://line-bot-help.japan-is.fun \n 「登録」コマンドで登録出来ます。\n 時刻設定はdatesetで登録できます。\n その他の使い方はhelpと入力してください'))
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=5000)
+    app.run()

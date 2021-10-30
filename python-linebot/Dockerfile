@@ -20,4 +20,10 @@ WORKDIR /linebot
 
 ENV TZ Asia/Tokyo
 
-CMD ["python","manage.py"]
+#RUN groupdel ssh
+
+#RUN groupadd -g 101 nginx && useradd -u 101 -g 101 nginx
+
+#USER 101
+
+CMD ["uwsgi", "--http=0.0.0.0:5000 --wsgi-file=app.py --callable=app"]

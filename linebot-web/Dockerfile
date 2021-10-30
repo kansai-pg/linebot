@@ -24,4 +24,6 @@ COPY ./zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 
 COPY ./linebot-web /var/www/html
 
+ENV TZ Asia/Tokyo
+
 RUN groupadd -g 101 nginx && useradd -u 101 -g 101 nginx

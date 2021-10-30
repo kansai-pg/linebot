@@ -18,6 +18,6 @@ COPY ./python-linebot linebot
 
 WORKDIR /linebot
 
-#RUN pip install mod_wsgi-standalone
+ENV TZ Asia/Tokyo
 
 CMD ["python","manage.py"]

@@ -11,7 +11,7 @@ $id = $_GET['id'];
 
 $_SESSION['id'] = $id;
 
-require('dbconnect.php');
+require('./dbconnect.php');
 
 #https://gray-code.com/php/getting-data-by-using-pdo/
 $stmt = $dbh->prepare("SELECT id, room_name, time, datetime, frequency FROM mainid WHERE id = :id");

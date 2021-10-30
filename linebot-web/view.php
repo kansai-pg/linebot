@@ -19,7 +19,7 @@ if (empty($_SESSION['state']) or empty($_SESSION['state'])){
 
 $user_id = $_SESSION['user_id'];
 
-require('dbconnect.php');
+require('./dbconnect.php');
 
 #https://gray-code.com/php/getting-data-by-using-pdo/
 $stmt = $dbh->prepare("SELECT id, room_name, time, datetime, frequency FROM mainid WHERE user_id = :user_id");

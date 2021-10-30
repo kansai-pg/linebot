@@ -1,7 +1,7 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-require('dbconnect.php');
+require('./dbconnect.php');
 $user_id = $_SESSION['user_id'];
 
 $frequency = mb_convert_kana($_POST['data'], "n");

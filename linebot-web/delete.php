@@ -1,6 +1,6 @@
 <?php
 ini_set('display_errors', "On");
-require('dbconnect.php');
+require('./dbconnect.php');
 $stmt = $dbh->prepare("DELETE FROM mainid WHERE id = :id");
 foreach ($_GET["id"] as $value) {
 	#$stmt = $dbh->prepare("DELETE FROM mainid WHERE id = :id");

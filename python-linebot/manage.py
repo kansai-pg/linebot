@@ -53,7 +53,7 @@ flex_json_dict = json.load(open('time_list.json', 'r'))
 flex_json_dict_rooms = json.load(open('roomoptions.json', 'r'))
 flex_json_dict_msg = json.load(open('msg.json', 'r'))
 
-@app.route("/callback", methods=['POST'])
+@app.route("/linebot", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']

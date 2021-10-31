@@ -14,16 +14,18 @@ COPY ./python-linebot/requirements.txt requirements.txt
 
 RUN pip install -r requirements.txt
 
-COPY ./python-linebot linebot
+RUN groupdel ssh
 
-WORKDIR /linebot
+COPY ./python-linebot /home/linebot
+
+RUN mkdir -p /home/socket
+
+WORKDIR /home/linebot
+
+RUN chown -R 101:101 /home/linebot /home/socket
 
 ENV TZ Asia/Tokyo
 
-#RUN groupdel ssh
+RUN groupadd -g 101 nginx && useradd -u 101 -g 101 nginx
 
-#RUN groupadd -g 101 nginx && useradd -u 101 -g 101 nginx
-
-#USER 101
-
-CMD ["uwsgi", "--http=0.0.0.0:5000 --wsgi-file=app.py --callable=app"]
+CMD uwsgi uwsgi.ini

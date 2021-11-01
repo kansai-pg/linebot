@@ -2,3 +2,4 @@ cx_Oracle
 line-bot-sdk
 flask
 uWSGI
+bleach

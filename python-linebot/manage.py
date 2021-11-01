@@ -18,6 +18,7 @@ import sys
 import json
 import unicodedata
 import ast
+import bleach
 
 from flask import Flask, request, abort
 from linebot_class import mainpostgresql
@@ -81,7 +82,7 @@ def handle_text_message(event):
     try:
         #http://eneprog.blogspot.com/2018/09/pythonunicodedata.html
         #半角全角両方対応できるようにする
-        text = unicodedata.normalize("NFKC", event.message.text)
+        text = bleach.clean(unicodedata.normalize("NFKC", event.message.text))
         text.strip()
 
         if text == 'help':

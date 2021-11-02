@@ -13,7 +13,7 @@ class get_from_line {
         $postData = array(
             'grant_type'    => 'authorization_code',
             'code'          => $this->code,
-            'redirect_uri'  => 'https://linebot-web.japan-is.fun/view.php',
+            'redirect_uri'  => 'https://linebot.japan-is.fun/view.php',
             'client_id'     => '1656389284',
             'client_secret' => 'cfab8fa27e86da4405bc9187370f87a6'
           );

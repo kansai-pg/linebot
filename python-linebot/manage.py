@@ -80,9 +80,10 @@ def callback():
 def handle_text_message(event):
 
     try:
+        original_text = event.message.text
         #http://eneprog.blogspot.com/2018/09/pythonunicodedata.html
         #半角全角両方対応できるようにする
-        text = bleach.clean(unicodedata.normalize("NFKC", event.message.text))
+        text = bleach.clean(unicodedata.normalize("NFKC", original_text))
         text.strip()
 
         if text == 'help':
@@ -402,13 +403,13 @@ def handle_text_message(event):
         else:
             if isinstance(event.source, SourceGroup):
                 #ここの部分は半角全角変換を行わない（ユーザーの入力内容が正しく扱われない可能性を避けるため）
-                after_update(event.source.group_id, event.message.text)
+                after_update(event.source.group_id, original_text)
         
             elif isinstance(event.source, SourceRoom):
-                after_update(event.source.room_id, event.message.text)
+                after_update(event.source.room_id, original_text)
 
             elif isinstance(event.source, SourceUser):
-                after_update(event.source.user_id, event.message.text, True)
+                after_update(event.source.user_id, original_text, True)
 
     except OverflowError:
         line_bot_api.reply_message(

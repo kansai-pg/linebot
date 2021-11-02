@@ -101,9 +101,9 @@ $room_datas = $stmt->fetchAll();
                 </div>
                 <div class="d-flex align-items-center">
                     <button type="submit" class="btn btn-primary mx-auto" style="width: 50%; margin: 20px;">送信</button>
+                    <button type="button" class="btn btn-primary" onclick="location.href='view.php'">一覧表示へ戻る</button>
             </form>
                 </div>
-
         </div>
         <button type="button" class="btn btn-primary" onclick="location.href='view.php'">一覧表示へ戻る</button>
     </div>

@@ -80,7 +80,7 @@ def callback():
 def handle_text_message(event):
 
     try:
-        original_text = event.message.text
+        original_text = bleach.clean(event.message.text)
         #http://eneprog.blogspot.com/2018/09/pythonunicodedata.html
         #半角全角両方対応できるようにする
         text = bleach.clean(unicodedata.normalize("NFKC", original_text))

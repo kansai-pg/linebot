@@ -105,7 +105,6 @@ $room_datas = $stmt->fetchAll();
             </form>
                 </div>
         </div>
-        <button type="button" class="btn btn-primary" onclick="location.href='view.php'">一覧表示へ戻る</button>
     </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

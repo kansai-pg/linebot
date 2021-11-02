@@ -102,10 +102,10 @@ $room_datas = $stmt->fetchAll();
                 <div class="d-flex align-items-center">
                     <button type="submit" class="btn btn-primary mx-auto" style="width: 50%; margin: 20px;">送信</button>
             </form>
-                    <button onclick="location.href='view.php'" class="btn btn-primary">一覧表示へ戻る</button>
                 </div>
 
         </div>
+        <button onclick="location.href='view.php'" class="btn btn-primary">一覧表示へ戻る</button>
     </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

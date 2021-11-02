@@ -8,5 +8,5 @@ foreach ($_GET["id"] as $value) {
 	$stmt->execute();
 }
 #print_r($_GET["id"]);
-echo "<h1> 削除完了 </h1>"
+echo "<h1> 削除完了 </h1>";
 ?>

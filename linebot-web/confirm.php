@@ -142,7 +142,7 @@ if($back){
                     </div>
                 </div>
 
-                <button onclick="location.href='view.php'" class="btn btn-primary">一覧表示</button>
+                <button onclick="location.href='view.php'" class="btn btn-primary">一覧表示へ戻る</button>
             
         </div>
     </div>

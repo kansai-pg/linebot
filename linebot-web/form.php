@@ -74,6 +74,7 @@ if(empty($user_id)){
                 </div>
                 <div class="d-flex align-items-center">
                     <button type="submit" class="btn btn-primary mx-auto" style="width: 50%; margin: 20px;">送信</button>
+                    <button onclick="location.href='view.php'" class="btn btn-primary">一覧表示へ戻る</button>
                 </div>
             </form>
 

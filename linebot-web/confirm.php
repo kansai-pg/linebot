@@ -2,11 +2,14 @@
 session_start();
 ini_set('display_errors', "On");
 require('./dbconnect.php');
+#ユーザーID
 $user_id = $_SESSION['user_id'];
-
+#全角で入力されても半角に変換する
 $frequency = mb_convert_kana($_POST['data'], "n");
+#今日の日付に入力された日数を足す
 $frequency_date = date("Y-m-d", strtotime("+ " . $frequency . "day"));
 #https://gray-code.com/php/make-the-board-vol8/
+#ここは文字を受け付けるのでHTMLインジェクション対策
 $room_name = htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8');
 $time = $_POST['time'];
 
@@ -20,10 +23,12 @@ if(empty($room_name) || preg_match('/^(\s|　)+$/',$room_name)){
     $back = true;
 }
 #https://www.flatflag.nir87.com/is_numeric-682
+#空文字やスペースのみ、数字以外の文字が混じっているとエラーを返す
 if(!preg_match('/^[1-9]+$/', $frequency)){
     $_SESSION['error_data'] = " ←通知頻度の値が不正です。";
     $back = true;
 }
+#数値が指定の範囲で無ければエラーを返す
 if(!preg_match('/^[0-9]+$/',$time) || $time >= 25){
     $_SESSION['error_time'] = " ←通知時刻の値が不正です。";
     $back = true;
@@ -41,7 +46,7 @@ $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 if($back){
     header("Location: form.php");
-}else{
+}else{#$_SESSION['id']にデータがあれば編集用としてデータを処理する。なければ新規登録としてデータを処理する
     if (!empty($_SESSION['id'])) {
         $stmt = $dbh->prepare('update mainid  SET room_name = :room_name, time = :time, frequency = :frequency, datetime = LOCALTIMESTAMP + :frequency WHERE id = :id');
         $stmt->bindValue(":id",$_SESSION['id'],PDO::PARAM_STR);

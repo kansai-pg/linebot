@@ -7,6 +7,7 @@ if (empty($_GET['id'])){
     exit;
 }
 
+#削除対象のデータの主キー (UUIDなのでこの方法で受け取る)
 $id = $_GET['id'];
 
 $_SESSION['id'] = $id;

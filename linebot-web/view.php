@@ -28,9 +28,7 @@ $stmt->bindValue(":user_id",$user_id,PDO::PARAM_STR);
 
 $stmt->execute();
 
-#$row = $stmt -> fetch(PDO::FETCH_ASSOC);
-
-#print_r($row);
+unset($_SESSION['id']);
 
 ?>
 

@@ -86,7 +86,7 @@ $room_datas = $stmt->fetchAll();
                         }
                     }
                     for($j=1;$j<=6;$j++){
-                        print('<option value="'.$j.'">'.$j);
+                        print('<option value="'.$i);
                         if ($room_datas[0]["TIME"] == $i) {
                             print('" selected>'.$i . '</option>');
                         } else {

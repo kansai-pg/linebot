@@ -1,7 +1,7 @@
 version: '2'
 services:
   nginx:
-    image: nginx:1.21.3
+    image: nginx:1.21
     volumes:
       - uwsgi:/var/run/uwsgi/
       - dbsocket:/var/run/php-fpm/

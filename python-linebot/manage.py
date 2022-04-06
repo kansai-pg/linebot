@@ -128,9 +128,9 @@ def handle_text_message(event):
                     if int(user_text) <= 24:
                         #DBへ時刻情報をUPDATE
                         mainpostgresql.update("time", int(user_text), user_id, False, True, etccolum="status", etcdata=2)
-                        #Python側で一週間後のdatetimeを生成してDBへUPDATE(heroku DBのタイムゾーンはUTCから変更不可)
+                        #Python側で一週間後のdatetimeを生成してDBへUPDATE
                         mainpostgresql.update("datetime", datetime.date.today() + datetime.timedelta(days=7), user_id, False, True, etccolum="status", etcdata=2)
-                        #何日ごとに通知するかをUPDATE
+                        #7日ごとに通知するようにUPDATE
                         mainpostgresql.update("frequency", 7, user_id, False, True, etccolum="status", etcdata=2)
                         if not send_on_user:
                             #ステータスコードを当番入力待機に設定する
@@ -154,6 +154,8 @@ def handle_text_message(event):
                     mainpostgresql.update("datetime", datetime.date.today() + datetime.timedelta(days=int(user_text)), user_id, False, True, etccolum="status", etcdata=4)
                     #ステータスコードを待機なしへ変更
                     mainpostgresql.update("status", 0, user_id, True, True, etccolum="status", etcdata=4)
+                    #lastpushへ本日の日付を登録（後で放置ユーザ情報向けに利用する）
+                    mainpostgresql.update("lastpush", datetime.date.today(), user_id, False, False, user_text[1])
                     line_bot_api.reply_message(
                     event.reply_token, TextSendMessage(text="登録完了しました。"))
 
@@ -430,7 +432,7 @@ def handle_text_message(event):
 def handle_join(event):
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.source.type + 'への登録ありがとうございます。\n掃除通知をお知らせします。\nbotの利用規約はこちらをご参照ください\n https://line-bot-help.japan-is.fun \n 「登録」コマンドで登録出来ます。\n 時刻設定はdatesetで登録できます。\n その他の使い方はhelpと入力してください'))
+        TextSendMessage(text=event.source.type + 'への登録ありがとうございます。\n掃除通知をお知らせします。\nbotの利用規約はこちらをご参照ください\n https://line-bot.japan-is.fun \n 「登録」コマンドで登録出来ます。\n 時刻設定はdatesetで登録できます。\n その他の使い方はhelpと入力してください'))
 
 if __name__ == '__main__':
     app.run()

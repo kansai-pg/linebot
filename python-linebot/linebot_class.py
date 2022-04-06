@@ -63,10 +63,13 @@ class mainpostgresql():
 
                 conn.commit()
                 
-        except cx_Oracle.DatabaseError as e:
-            raise db_error
-        except db_error:
+        except cx_Oracle.Error as e:
+            print(e)
             raise user_type_error
+
+        except cx_Oracle.DatabaseError as e:
+            print(e)
+            raise db_error
 
     def insert_1st(insert):
             """
@@ -218,8 +221,7 @@ class mainpostgresql():
 
         except  cx_Oracle.DatabaseError as e:
                 #DB接続エラー時にエラー内容とともに自分のLineへ通知が行く
-                #push_error.send_error(e, mainpostgresql.my_user_id)
-                pass
+                push_error.send_error(e, mainpostgresql.my_user_id)
 
     def DELETE(DELETE, id):
         """

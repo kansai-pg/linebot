@@ -138,6 +138,8 @@ def handle_text_message(event):
                             line_bot_api.reply_message(event.reply_token, FlexSendMessage(alt_text='当番設定', contents=flex_json_dict_msg))
 
                         else:
+                            #lastpushへ本日の日付を登録（後で放置ユーザ情報向けに利用する）
+                            mainpostgresql.update("lastpush", datetime.date.today(), user_id, True, True, etccolum="status", etcdata=2)
                             #ステータスコードを待機無しにする
                             mainpostgresql.update("status", 0, user_id, True, True, etccolum="status", etcdata=2)
                             #登録完了メッセージを送信
@@ -154,8 +156,6 @@ def handle_text_message(event):
                     mainpostgresql.update("datetime", datetime.date.today() + datetime.timedelta(days=int(user_text)), user_id, False, True, etccolum="status", etcdata=4)
                     #ステータスコードを待機なしへ変更
                     mainpostgresql.update("status", 0, user_id, True, True, etccolum="status", etcdata=4)
-                    #lastpushへ本日の日付を登録（後で放置ユーザ情報向けに利用する）
-                    mainpostgresql.update("lastpush", datetime.date.today(), user_id, False, False, user_text[1])
                     line_bot_api.reply_message(
                     event.reply_token, TextSendMessage(text="登録完了しました。"))
 

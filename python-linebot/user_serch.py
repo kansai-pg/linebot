@@ -7,10 +7,7 @@ import datetime
 from linebot_class import push_error
 import sys
 
-#https://note.nkmk.me/python-datetime-now-today/
-
 token = getenv('LINE_CHANNEL_ACCESS_TOKEN', None)
-#https://qiita.com/danishi/items/07dd1b2f2a28255f7a85
 
 url = 'https://api.line.me/v2/bot/message/push'
 req_header = {
@@ -36,12 +33,7 @@ def scheduled_job():
         with get_connection() as conn:
             with conn.cursor() as cur:
                 print(day, hour)
-                #実行時の時刻を取得し、通知する全ユーザーのIDを一旦配列に格納
-                #https://rfs.jp/sb/sql/s03/03_2-2.html
-                #改行
-                #https://developers.line.biz/ja/docs/messaging-api/flex-message-elements/
-                #https://www.sejuku.net/blog/56589
-                cur.execute("SELECT mainid.user_id, room_name, frequency, lastpush, mainid.id, user_name FROM mainid LEFT OUTER JOIN duty ON mainid.on_duty = duty.user_id WHERE datetime = :0 AND time <= :1", (day, hour,))
+                cur.execute("select user_id, room_name, LASTPUSH, ID from mainid WHERE LASTPUSH <= ADD_MONTHS(:0, -3)", (day,))
                 for col in cur:
                     #jsonで送信内容を書く
                     req_data = {
@@ -49,7 +41,7 @@ def scheduled_job():
                         "messages": [
                             {
                             "type": "flex",
-                            "altText": col[1] + "掃除の時間です。",
+                            "altText": col[1] + "掃除に関する返答が長期間ありません。",
                             "contents": {
                             "type": "bubble",
                             "size": "mega",
@@ -60,7 +52,7 @@ def scheduled_job():
                                 "contents": [
                                 {
                                     "type": "text",
-                                    "text": col[1] + "掃除の時間です",
+                                    "text": col[1] + "掃除に関する返答が長期間ありません。",
                                     "align": "center",
                                 }
                                 ]
@@ -71,25 +63,37 @@ def scheduled_job():
                                 "contents": [
                                             {
                                             "type": "text",
-                                            "text": col[1] + "掃除の時間です\n",
+                                            "text": col[1] + "掃除に関する返答が三ヶ月以上ありません。\n",
                                             "align": "center",
                                             "wrap": True,
                                             },
                                             {
                                             "type": "text",
-                                            "text": "前回の掃除日は" + str(col[3]) + "です\n",
+                                            "text": "前回の掃除日は" + str(col[2]) + "です\n",
                                             "align": "center",
                                             "wrap": True,
                                             },
                                             {
                                             "type": "text",
-                                            "text": "※初回通知の場合は\n",
+                                            "text": "※i一度も返答が無い場合は\n",
                                             "align": "center",
                                             "wrap": True,
                                             },
                                             {
                                             "type": "text",
-                                            "text": "登録日が表示されます。\n",
+                                            "text": "登録日が表示されます\n",
+                                            "align": "center",
+                                            "wrap": True,
+                                            },
+                                            {
+                                            "type": "text",
+                                            "text": "このまま返答がない場合は\n",
+                                            "align": "center",
+                                            "wrap": True,
+                                            },
+                                            {
+                                            "type": "text",
+                                            "text": "この名称への通知情報が自動削除されます\n",
                                             "align": "center",
                                             "wrap": True,
                                             }
@@ -103,16 +107,16 @@ def scheduled_job():
                                     "type": "button",
                                     "action": {
                                     "type": "message",
-                                    "label": "掃除完了！",
-                                    "text": "YES," + str(col[4])
+                                    "label": "削除しない",
+                                    "text": str(col[3]) + ",NODEL"
                                     }
                                 },
                                 {
                                     "type": "button",
                                     "action": {
                                     "type": "message",
-                                    "label": "まだです",
-                                    "text": "nope," + str(col[4])
+                                    "label": "削除する",
+                                    "text": str(col[3]) + ",DEL"
                                     }
                                 }
                                 ]
@@ -121,54 +125,11 @@ def scheduled_job():
                             }
                         ]
                             }
-                    if col[5]:
-                        req_data["messages"][0]['contents']["body"] = {
-                                        "type": "box",
-                                        "layout": "vertical",
-                                        "contents": [
-                                            {
-                                            "type": "text",
-                                            "text": col[1] + "掃除の時間です\n",
-                                            "align": "center",
-                                            "wrap": True,
-                                            },
-                                            {
-                                            "type": "text",
-                                            "text": "前回の掃除日は" + str(col[3]) + "です\n",
-                                            "align": "center",
-                                            "wrap": True,
-                                            },
-                                            {
-                                            "type": "text",
-                                            "text": "※初回通知の場合は\n",
-                                            "align": "center",
-                                            "wrap": True,
-                                            },
-                                            {
-                                            "type": "text",
-                                            "text": "Noneと表示されます\n",
-                                            "align": "center",
-                                            "wrap": True,
-                                            },
-                                            {
-                                            "type": "text",
-                                            "text": "当番は\n",
-                                            "align": "center",
-                                            "wrap": True,
-                                            },
-                                            {
-                                            "type": "text",
-                                            "text": col[5] + "です。",
-                                            "align": "center",
-                                            "wrap": True,
-                                            }
-                                        ]
-                                        }
 
                     #頻度のデータを更新する（frequencyに7日が入っていた場合実行日から7日語のdatatimeをinsertする
                     with get_connection() as conn:
                         with conn.cursor() as cur:
-                            cur.execute("UPDATE mainid SET status = 7, datetime= :0 WHERE id= :1", (datetime.date.today() + datetime.timedelta(days=col[2]), col[4]))
+                            cur.execute("UPDATE mainid SET status = 6 WHERE id= :1", (col[3],))
                             conn.commit()
 
                     #push通知送信処理
@@ -188,8 +149,6 @@ def scheduled_job():
                         #送信エラー時に自分のLineへ通知が行く、Line側の障害だったら当然詰み
                         push_error.send_error(e.reason, my_user_id)
 
-        #ループ処理を抜けた後にコミットして通知頻度をupdateする
-        #conn.commit()
     except cx_Oracle.DatabaseError as e:
         #DB接続エラーの時にエラー内容とともに自分のLineへ通知が行く
         push_error.send_error(e, my_user_id)

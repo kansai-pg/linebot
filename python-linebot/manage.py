@@ -33,7 +33,7 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
     SourceGroup, SourceRoom, SourceUser,
-    MessageAction, QuickReplyButton, QuickReply, JoinEvent, FlexSendMessage)
+    JoinEvent, FlexSendMessage)
 
 app = Flask(__name__)
 #app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_host=1, x_proto=1)

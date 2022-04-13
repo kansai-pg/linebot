@@ -41,7 +41,7 @@ def scheduled_job():
                 #改行
                 #https://developers.line.biz/ja/docs/messaging-api/flex-message-elements/
                 #https://www.sejuku.net/blog/56589
-                cur.execute("SELECT mainid.user_id, room_name, frequency, lastpush, mainid.id, user_name FROM mainid LEFT OUTER JOIN duty ON mainid.on_duty = duty.user_id WHERE datetime = :0 AND time <= :1", (day, hour,))
+                cur.execute("SELECT mainid.user_id, room_name, frequency, TO_CHAR(lastpush,'yyyy/mm/dd'), mainid.id, user_name FROM mainid LEFT OUTER JOIN duty ON mainid.on_duty = duty.user_id WHERE datetime = :0 AND time <= :1", (day, hour,))
                 for col in cur:
                     #jsonで送信内容を書く
                     req_data = {

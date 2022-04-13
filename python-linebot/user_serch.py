@@ -33,7 +33,7 @@ def scheduled_job():
         with get_connection() as conn:
             with conn.cursor() as cur:
                 print(day, hour)
-                cur.execute("select user_id, room_name, LASTPUSH, ID from mainid WHERE LASTPUSH <= ADD_MONTHS(:0, -3)", (day,))
+                cur.execute("select user_id, room_name, TO_CHAR(lastpush,'yyyy/mm/dd'), ID from mainid WHERE LASTPUSH <= ADD_MONTHS(:0, -3)", (day,))
                 for col in cur:
                     #jsonで送信内容を書く
                     req_data = {

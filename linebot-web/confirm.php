@@ -64,97 +64,46 @@ if($back){
     unset($_SESSION['error_time']);
     unset($_SESSION['id']);
 }
+
+include('tpl.php');
 ?>
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>クリーンリマインダー</title>
-  
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-    p {
-    font-size: 130%;
-    padding: 3px;
-    }
+<div class="container" style="background: white; padding:10px; margin-top: 10px;">
+    <div class="center">
+        <h1 style="margin: 10px;">送信完了</h1>
+        <div class="form-group row">
+                <label class="col-sm-2 col-form-label">部屋名：</label>
+                <div class="col-sm-10">
+                    <input class="form-control" value="<?php echo $room_name;?>" readonly>
+                </div>
+            </div>
 
-    body {
-        background:rgb(198, 255, 255);
-        max-width: 100%;
-    }
 
-    .center {
-    background-size: cover;
-    height: 500px;
-    padding: 20px;
-    position: relative;
-    font-size: 18px;
-    }
-    
-  </style>
-</head>
-<body>
-    
-    <nav class="navbar navbar-expand-sm navbar-dark bg-info">
-        <a class="navbar-brand" href="index.html">クリーンリマインダー</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav4" aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav4">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="howto.html">使い方<span class="sr-only">(current)</span></a> 
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="terms.html">利用規約</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="container" style="background: white; padding:10px; margin-top: 10px;">
-        <div class="center">
-            <h1 style="margin: 10px;">送信完了</h1>
             <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">部屋名：</label>
-                    <div class="col-sm-10">    
-                        <input class="form-control" value="<?php echo $room_name;?>" readonly>
-                    </div>
+                <label class="col-sm-2 col-form-label">時間：</label>
+                <div class="col-sm-10">
+                    <input class="form-control" value="<?php echo $time . "時";?>" readonly>
                 </div>
+            </div>
 
-
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">時間：</label>
-                    <div class="col-sm-10">    
-                        <input class="form-control" value="<?php echo $time . "時";?>" readonly>
-                    </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">通知頻度：</label>
+                <div class="col-sm-10">
+                    <!-- https://qiita.com/Yorinton/items/2a3854cd878e310a931f -->
+                    <input class="form-control" value="<?php echo $frequency . "日ごと"?>" readonly>
                 </div>
+            </div>
 
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">通知頻度：</label>
-                    <div class="col-sm-10">
-                        <!-- https://qiita.com/Yorinton/items/2a3854cd878e310a931f -->
-                        <input class="form-control" value="<?php echo $frequency . "日ごと"?>" readonly>
-                    </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">次回通知日：</label>
+                <div class="col-sm-10">
+                    <!-- https://qiita.com/Yorinton/items/2a3854cd878e310a931f -->
+                    <input class="form-control" value="<?php echo $frequency_date;?>" readonly>
                 </div>
+            </div>
 
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">次回通知日：</label>
-                    <div class="col-sm-10">
-                        <!-- https://qiita.com/Yorinton/items/2a3854cd878e310a931f -->
-                        <input class="form-control" value="<?php echo $frequency_date;?>" readonly>
-                    </div>
-                </div>
-
-                <button type="button" class="btn btn-primary" onclick="location.href='view.php'">一覧表示へ戻る</button>
-        </div>
+            <button type="button" class="btn btn-primary" onclick="location.href='view.php'">一覧表示へ戻る</button>
     </div>
-
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-  <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+</div>
 </body>
 </html>
 

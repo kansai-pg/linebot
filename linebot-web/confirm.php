@@ -68,7 +68,7 @@ if($back){
 include('tpl.php');
 ?>
 <div class="container" style="background: white; padding:10px; margin-top: 10px;">
-    <div class="center">
+    <div class="center" style="font-size: 18px; background-image:none;">
         <h1 style="margin: 10px;">送信完了</h1>
         <div class="form-group row">
                 <label class="col-sm-2 col-form-label">部屋名：</label>

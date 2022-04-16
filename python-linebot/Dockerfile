@@ -1,5 +1,15 @@
 FROM python:3.7
 
+RUN groupdel ssh && groupadd -g 101 nginx && useradd -u 101 -g 101 nginx
+
+COPY ./python-linebot /home/linebot
+
+RUN chown -R 101:101 /home/linebot
+
+RUN mkdir -p /home/socket && chown -R 101:101 /home/socket
+
+RUN mkdir -p /home/nginx && chown -R 101:101 /home/nginx
+
 ENV ORACLE_HOME=/opt/oracle
 
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ORACLE_HOME/lib
@@ -10,22 +20,14 @@ COPY ./Wallet_DB202110141010.zip /opt/oracle/network/admin/Wallet_DB202110141010
 
 RUN sh -c 'cd /opt/oracle/network/admin/ && unzip -B Wallet_*.zip && rm -f instantclient-*.zip'
 
-COPY ./python-linebot/requirements.txt requirements.txt 
-
-RUN pip install -r requirements.txt
-
-RUN groupdel ssh
-
-COPY ./python-linebot /home/linebot
-
-RUN mkdir -p /home/socket
+USER nginx
 
 WORKDIR /home/linebot
 
-RUN chown -R 101:101 /home/linebot /home/socket
+ENV PATH="/home/nginx/.local/bin:${PATH}"
+
+RUN pip install --user -r requirements.txt
 
 ENV TZ Asia/Tokyo
-
-RUN groupadd -g 101 nginx && useradd -u 101 -g 101 nginx
 
 CMD uwsgi uwsgi.ini

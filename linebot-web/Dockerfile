@@ -27,3 +27,8 @@ COPY ./linebot-web /var/www/html
 ENV TZ Asia/Tokyo
 
 RUN groupadd -g 101 nginx && useradd -u 101 -g 101 nginx
+
+RUN chown -R nginx:nginx /var/www/ && chown -R nginx:nginx /var/run/ \
+&& chown -R nginx:nginx /var/log/
+
+USER nginx

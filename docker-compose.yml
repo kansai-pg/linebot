@@ -7,10 +7,8 @@ services:
       - dbsocket:/var/run/php-fpm/
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./linebot-web:/var/www/html
-      - ./server.crt:/etc/nginx/server.crt
-      - ./server.key:/etc/nginx/server.key
     ports:
-      - "443:4443"
+      - "8888:8888"
     environment:
       TZ: Asia/Tokyo
     user: nginx:nginx

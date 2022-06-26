@@ -15,6 +15,7 @@ services:
     depends_on:
       - php
       - linebot-python
+    restart: unless-stopped
 
   php:
     build:
@@ -24,6 +25,7 @@ services:
       pass:
     volumes:
       - dbsocket:/var/run/php-fpm/
+    restart: unless-stopped
 
   linebot-python:
     build:
@@ -35,8 +37,8 @@ services:
       pass:
     volumes:
       - uwsgi:/home/socket/
+    restart: unless-stopped
       
-restart: unless-stopped
 volumes:
   dbsocket:
   uwsgi:

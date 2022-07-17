@@ -277,6 +277,13 @@ def handle_text_message(event):
             """
             mainpostgresql.update("status", 0, user_id, True, False, user_text[1])
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text="次はがんばりましょう！"))
+
+        def nodel(user_id, user_text):
+            """
+            長期間返答なしユーザーへ通知時に「削除しない」を選択した際の処理
+            """
+            mainpostgresql.update("status", 0, user_id, True, False, user_text[1])
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text="アクティブに変更されました。"))
         
         if text == '登録':
             #グループから投稿されているかを判定
@@ -386,6 +393,16 @@ def handle_text_message(event):
 
             elif isinstance(event.source, SourceUser):
                 nope(event.source.user_id, text.split(','))
+
+        elif 'NODEL' in text:
+            if isinstance(event.source, SourceGroup):
+                nodel(event.source.group_id, text.split(','))
+
+            elif isinstance(event.source, SourceRoom):
+                nodel(event.source.room_id, text.split(','))
+
+            elif isinstance(event.source, SourceUser):
+                nodel(event.source.user_id, text.split(','))
 
 
         elif text == "not":

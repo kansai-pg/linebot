@@ -16,18 +16,17 @@ COPY ./Wallet_DB202110141010.zip /opt/oracle/network/admin/Wallet_DB202110141010
 
 RUN sh -c 'cd /opt/oracle/network/admin/ && unzip -B Wallet_*.zip && rm -f instantclient-*.zip'
 
-USER nginx
-
 ENV PATH="/home/nginx/.local/bin:${PATH}"
+
+USER nginx
 
 COPY ./python-linebot/requirements.txt /tmp
 
 RUN pip install --user -r /tmp/requirements.txt
+
 WORKDIR /home/linebot
 
-COPY ./python-linebot /home/linebot
-
-RUN chown -R 101:101 /home/linebot
+ADD --chown=101:101 ./python-linebot /home/linebot
 
 ENV TZ Asia/Tokyo
 

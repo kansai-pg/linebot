@@ -2,10 +2,6 @@ FROM python:3.7
 
 RUN groupdel ssh && groupadd -g 101 nginx && useradd -u 101 -g 101 nginx
 
-COPY ./python-linebot /home/linebot
-
-RUN chown -R 101:101 /home/linebot
-
 RUN mkdir -p /home/socket && chown -R 101:101 /home/socket
 
 RUN mkdir -p /home/nginx && chown -R 101:101 /home/nginx
@@ -22,11 +18,16 @@ RUN sh -c 'cd /opt/oracle/network/admin/ && unzip -B Wallet_*.zip && rm -f insta
 
 USER nginx
 
-WORKDIR /home/linebot
-
 ENV PATH="/home/nginx/.local/bin:${PATH}"
 
-RUN pip install --user -r requirements.txt
+COPY ./python-linebot/requirements.txt /tmp
+
+RUN pip install --user -r /tmp/requirements.txt
+WORKDIR /home/linebot
+
+COPY ./python-linebot /home/linebot
+
+RUN chown -R 101:101 /home/linebot
 
 ENV TZ Asia/Tokyo
 

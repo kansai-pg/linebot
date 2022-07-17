@@ -373,7 +373,7 @@ def handle_text_message(event):
 
             elif isinstance(event.source, SourceUser):
                 set_deta(event.source.user_id, text.split(','))
-
+        #delで引っかかるのでNODELをdelの上に書く、ただこの書き方はありなんかな？
         elif 'NODEL' in text:
             if isinstance(event.source, SourceGroup):
                 nodel(event.source.group_id, text.split(','))

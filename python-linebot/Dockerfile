@@ -1,4 +1,4 @@
-FROM python:3.7
+FROM python:3.7.13
 
 RUN groupdel ssh && groupadd -g 101 nginx && useradd -u 101 -g 101 nginx
 

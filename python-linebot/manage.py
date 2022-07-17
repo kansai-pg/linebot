@@ -374,6 +374,16 @@ def handle_text_message(event):
             elif isinstance(event.source, SourceUser):
                 set_deta(event.source.user_id, text.split(','))
 
+        elif 'NODEL' in text:
+            if isinstance(event.source, SourceGroup):
+                nodel(event.source.group_id, text.split(','))
+
+            elif isinstance(event.source, SourceRoom):
+                nodel(event.source.room_id, text.split(','))
+
+            elif isinstance(event.source, SourceUser):
+                nodel(event.source.user_id, text.split(','))
+
         elif 'DEL' in text:
             if isinstance(event.source, SourceGroup):
                 room_delete(event.source.group_id, text.split(','))
@@ -393,16 +403,6 @@ def handle_text_message(event):
 
             elif isinstance(event.source, SourceUser):
                 nope(event.source.user_id, text.split(','))
-
-        elif 'NODEL' in text:
-            if isinstance(event.source, SourceGroup):
-                nodel(event.source.group_id, text.split(','))
-
-            elif isinstance(event.source, SourceRoom):
-                nodel(event.source.room_id, text.split(','))
-
-            elif isinstance(event.source, SourceUser):
-                nodel(event.source.user_id, text.split(','))
 
 
         elif text == "not":

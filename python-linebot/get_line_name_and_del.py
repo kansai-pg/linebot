@@ -3,6 +3,7 @@ from os import getenv
 import cx_Oracle
 import urllib.request
 import json
+import datetime
 from linebot_class import push_error
 
 token = getenv('LINE_CHANNEL_ACCESS_TOKEN', None)

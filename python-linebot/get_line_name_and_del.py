@@ -14,9 +14,7 @@ day = datetime.date.today()
 
 hour = int(datetime.datetime.now().strftime('%H'))
 
-print(day, hour)
-
-print("get_line_name")
+print("get_line_name",day, hour)
 
 def get_connection():
     """
@@ -58,13 +56,13 @@ def get_line_name():
         print(e.reason)
         push_error.send_error(e, my_user_id)
 
-def DELETE(DELETE, id):
+def DELETE(day):
     """
     引数を元にdbをDELETEする
     """
     #https://qiita.com/hoto17296/items/0ca1569d6fa54c7c4732
     try:
-        with mainpostgresql.db_connect() as conn:
+        with get_connection() as conn:
             with conn.cursor() as cur:
                 cur.execute("DELETE FROM mainid WHERE status = 6 and LASTPUSH <= ADD_MONTHS(:0, -5)", (day,))
             conn.commit()
@@ -74,3 +72,4 @@ def DELETE(DELETE, id):
         push_error.send_error(e, my_user_id)
 
 get_line_name()
+DELETE(day)

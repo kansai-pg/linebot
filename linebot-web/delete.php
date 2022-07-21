@@ -11,4 +11,8 @@ foreach ($_GET["id"] as $value) {
 }
 #print_r($_GET["id"]);
 echo "<h1> 削除完了 </h1>";
+
+header("Location: view.php");
+exit();
+
 ?>

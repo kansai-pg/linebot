@@ -4,7 +4,8 @@ session_start();
 $user_id = $_SESSION['user_id'];
 
 if(empty($user_id)){
-    header("Location: index.html");
+    header("Location: index.php");
+    exit();
 }
 include('tpl.php');
 ?>

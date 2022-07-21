@@ -65,6 +65,9 @@ if($back){
     unset($_SESSION['id']);
 }
 
+header("Location: view.php");
+exit();
+
 include('tpl.php');
 ?>
 <div class="container" style="background: white; padding:10px; margin-top: 10px;">

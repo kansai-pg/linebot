@@ -9,8 +9,6 @@ foreach ($_GET["id"] as $value) {
 	$stmt->bindValue(":id",$value,PDO::PARAM_STR);
 	$stmt->execute();
 }
-#print_r($_GET["id"]);
-echo "<h1> 削除完了 </h1>";
 
 header("Location: view.php");
 exit();
